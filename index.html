@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Quiz Challenge</title>
+    <!-- Link to Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Link to custom Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="d-flex justify-content-between px-sm-4">
+        <a class="px-3 px-sm-1 quiz-font" href="view-scores.html">View Scores</a>
+        <div class="px-3 px-sm-1 quiz-font justify-content-center">Time: <span>0</span></div>
+    </header>
+
+    <!-- Coding Quiz Challenge - Start Page -->
+    <section class="container-fluid bg-white m-sm-4 m-0 py-3 py-sm-5">
+        <div class="conainer py-2 py-sm-5 text-center">
+            <div class=" d-inline-block mx-auto py-2 py-sm-5 quiz-form-width">
+                <h1 class="h1">Coding Quiz Challenge</h1>
+                <div class="m-4">Try to answer the following code-related questions within the time
+                    limit.
+                    Keep in mind that incorrect answers will penalize your scoretime by ten seconds!</div>
+                <button id="start-quiz" class="btn btn-primary quiz-bg-color">Start Quiz</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Link to javascript file -->
+    <script src="assets/script/index.js"></script>
+</body>
+
+</html>

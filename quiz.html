@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Quiz</title>
+    <!-- Link to Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Link to custom Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Link to javascript file containing quiz question list -->
+    <script src="assets/script/quiz_questions.js"></script>
+    <!-- Link to javascript file containing score helper utilities -->
+    <script src="assets/script/score-helper.js"></script>
+    <!-- Link to javascript file containing quiz timer utilities -->
+    <script src="assets/script/quiz-timer.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="d-flex justify-content-between px-sm-4">
+        <a class="px-3 px-sm-1 quiz-font" href="view-scores.html" id="view-scores">View Scores</a>
+        <p><span id="current-question-number"></span> of <span id="total-questions"></span></p>
+        <div class="px-3 px-sm-1 quiz-font justify-content-center">Time: <span id="timer-display"></span></div>
+    </header>
+
+    <!-- Coding Quiz -->
+    <section class="container-fluid bg-white m-md-3 m-0 py-3 py-sm-5">
+        <div class="container py-2 py-md-3 text-center">
+            <!-- Questions Section -->
+            <div class="row p-3 p-sm-4 text-left">
+                <div class="col-12 col-lg-2 col-xl-3"></div>
+                <div class="col-12 col-lg-8 col-xl-6" id="quiz-question-section">
+                    <h4 id="quiz-question" class="enable-line-breaks h4"></h4>
+                    <ul id="answer-choices-list" class="list-group quiz-list-style my-3"></ul>
+                    <!-- Message displayed if the answer selected is correct / incorrect -->
+                    <div class="alert alert-light border-top text-left collapse p-1" id="answer-status-message">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 col-xl-3"></div>
+            </div>
+            <!-- Results Section -->
+            <div class="row p-3 p-sm-4 text-left">
+                <div class="col-12 col-md-2 col-lg-3"></div>
+                <div class="col-12 col-md-8 col-lg-6 collapse" id="quiz-result-section">
+                    <div class="my-4">
+                        <h4 class="h4">All done!</h4>
+                    </div>
+                    <div class="my-4">
+                        <label class="form-text">Your final score is: <span id="final-score"></span></label>
+                    </div>
+                    <form class="form-inline">
+                        <label for="user-initials" class="mr-2 my-1">Enter initials:</label>
+                        <input type="text" class="form-control user-initials-input-width mr-2 my-1" id="user-initials"
+                            placeholder="Your initials">
+                        <button type="submit" id="submit-data"
+                            class="btn btn-primary quiz-bg-color my-1">Submit</button>
+                    </form>
+                    <!-- Error message displayed on submit if form data is not valid -->
+                    <div class="alert alert-light border-top text-left collapse p-1 my-3" id="form-validation-message">
+                    </div>
+                </div>
+                <div class="col-12 col-md-2 col-lg-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Link to javascript file -->
+    <script src="assets/script/quiz.js"></script>
+</body>
+
+</html>

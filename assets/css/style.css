@@ -1,0 +1,41 @@
+
+/* Background color for quiz page elements - list items, buttons, etc.  */
+.quiz-bg-color{
+    background-color: darkmagenta;
+}
+
+/* secondary / lighter Background color for quiz page elements - table headings, etc.  */
+.quiz-bg-color-light{
+    background-color: plum;
+}
+
+/* Text color for quiz page navigation elements - links and timer */
+.quiz-font{
+    color: darkmagenta;
+    font-weight: 600;
+}
+
+/* Custom styling for the quiz answer options list */
+.quiz-list-style{
+    list-style-type: none;
+}
+
+ /* set the maximum width of the quiz / index form for larger viewports */
+.quiz-form-width{
+    max-width: 600px;
+}
+
+/* set the maximum width of the view scores table for larger viewports */
+.score-form-width{
+   max-width: 800px;
+}
+
+/* set the maximum width of the user initials input text box for larger viewports */
+.user-initials-input-width{
+    max-width: 150px;
+ }
+
+/* styling to enable line breaks in text - this allows quiz questions to be multiline */
+ .enable-line-breaks{
+    white-space: pre-wrap;
+ }
