@@ -21,6 +21,8 @@ var questionIndex = 0;
 var questionResultTimeout = null;
 var currentScore = 0;
 var isQuizCompleted = false;
+var UserScoreHelper = new ScoreHelper();
+var quizTimer = new QuizTimer();
 
 /** This function Initializes the quiz and is called when the page is loaded up */
 function initializeQuiz() {
@@ -29,7 +31,7 @@ function initializeQuiz() {
     renderQuestion(quizQuestions[questionIndex]);
     totalQuestionsEl.textContent = quizQuestions.length;
     // Start the quiz timer 
-    window.quizTimer.start();
+    quizTimer.start();
 }
 
 /**
@@ -68,7 +70,7 @@ function loadNextQuestion() {
     if (questionIndex < quizQuestions.length)
         renderQuestion(quizQuestions[questionIndex]);
     else {
-        window.quizTimer.stop();
+        quizTimer.stop();
         showResultsPane();
     }
 }
@@ -92,7 +94,7 @@ function updateUserAnswer(selectionStatus) {
     }
     else {
         answerStatusMessageEl.textContent = "Wrong!";
-        window.quizTimer.applyTimePenalty();
+        quizTimer.applyTimePenalty();
     }
     answerStatusMessageEl.style.display = "block";
 }
@@ -104,6 +106,27 @@ function showResultsPane() {
     finalScoreDisplayEl.textContent = currentScore;
     quizQuestionSectionEl.style.display = "none";
     quizResultSectionEl.style.display = "block";
+}
+
+function answerChoicesList_Clicked(event) {
+    if (questionResultTimeout == null && event.target.matches("li") === true) {
+        var selectionStatus = quizQuestions[questionIndex].answer == event.target.id;
+        // Show selection status message  
+        updateUserAnswer(selectionStatus);
+        // Wait before loading the new question so user can read status
+        questionResultTimeout = setTimeout(loadNextQuestion, 600);
+    }
+}
+
+function ViewScoresLink_Clicked(event) {
+    var userMessage;
+    // Confirm if the user wishes to leave the page and redirect to view scores page
+    if (isQuizCompleted)
+        userMessage = "Your score will not be saved. \nDo you wish to continue? ";
+    else
+        userMessage = "This action will exit the Quiz. \nDo you wish to continue? ";
+    if (!confirm(userMessage))
+        event.preventDefault();
 }
 
 function submitButton_Clicked() {
@@ -119,20 +142,9 @@ function submitButton_Clicked() {
     }
 }
 
-function ViewScoresLink_Clicked(event) {
-    var userMessage;
-    // Confirm if the user wishes to leave the page and redirect to view scores page
-    if (isQuizCompleted)
-        userMessage = "Your score will not be saved. \nDo you wish to continue? ";
-    else
-        userMessage = "This action will exit the Quiz. \nDo you wish to continue? ";
-    if (!confirm(userMessage))
-        event.preventDefault();
-}
-
 function quizTimer_timeUpdated(event) {
     if (!isQuizCompleted) {
-        timerDisplayEl.textContent = event.detail.time;
+        timerDisplayEl.textContent = event.detail.displayTime;
         // End the quiz if the timer reaches 0
         if (event.detail.time == 0) {
             hideStatusMessage();
@@ -141,21 +153,11 @@ function quizTimer_timeUpdated(event) {
     }
 }
 
-function answerChoicesList_Clicked(event) {
-    if (questionResultTimeout == null && event.target.matches("li") === true) {
-        var selectionStatus = quizQuestions[questionIndex].answer == event.target.id;
-        // Show selection status message  
-        updateUserAnswer(selectionStatus);
-        // Wait a second before loading the new question
-        questionResultTimeout = setTimeout(loadNextQuestion, 1000);
-    }
-}
-
 // Attach event handlers
 answerChoicesListEl.addEventListener("click", answerChoicesList_Clicked);
-submitButtonEl.addEventListener("click", submitButton_Clicked);
 viewScoresLinkEl.addEventListener("click", ViewScoresLink_Clicked);
-window.addEventListener("timeupdated", quizTimer_timeUpdated);
+submitButtonEl.addEventListener("click", submitButton_Clicked);
+quizTimer.addEventListener(quizTimer_timeUpdated);
 
 // initialize the quiz 
 initializeQuiz();

@@ -2,11 +2,11 @@
 /** This class provides utility methods to work with the quiz timer */
 class QuizTimer {
     /** The total time allocated for the quiz in seconds -- 2 minutes */
-    static totalTimeAllocated = 120;
-    /** The penalty for a wrong answer in the quiz / seconds lost -- 15 seconds */
-    static wrongAnswerPenalty = 15;
+    totalTimeAllocated = 120;
+    /** The penalty for a wrong answer in the quiz / seconds lost -- 10 seconds */
+    wrongAnswerPenalty = 10;
     /** The custom event type published by this class when the time is updated */
-    static timeUpdatedEventType = "timeupdated";
+    timeUpdatedEventType = "timeupdated";
     secondsElapsed = 0;
     timeoutInterval = null;
 
@@ -14,9 +14,9 @@ class QuizTimer {
      * Applies a time penalty by subtracting time from the timer clock
      */
     applyTimePenalty() {
-        this.secondsElapsed = this.secondsElapsed + QuizTimer.wrongAnswerPenalty - 1;
-        if (this.secondsElapsed > QuizTimer.totalTimeAllocated)
-            this.secondsElapsed = QuizTimer.totalTimeAllocated;
+        this.secondsElapsed = this.secondsElapsed + this.wrongAnswerPenalty - 1;
+        if (this.secondsElapsed > this.totalTimeAllocated)
+            this.secondsElapsed = this.totalTimeAllocated;
         this.updateTime(this);
     }
 
@@ -24,7 +24,7 @@ class QuizTimer {
      * Starts the quiz timer
      */
     start() {
-        this.timeoutInterval = setInterval(this.updateTime, 1000, this);
+        this.timeoutInterval = setInterval(this.updateTime.bind(this), 1000);
     }
 
     /**
@@ -36,22 +36,38 @@ class QuizTimer {
     }
 
     /**
-     * Increments the time on the timer object provided and fires a custom event to notify listeners of the change
-     * @param {QuizTimer} quizTimer the timer object to be updated
+     * Appends an event handler for the time updated event. 
+     * @param {function} handler function to be invoked when the event is dispatched. 
      */
-    updateTime(quizTimer) {
-        quizTimer.secondsElapsed++;
+    addEventListener(handler) {
+        window.addEventListener(this.timeUpdatedEventType, handler);
+    }
+
+    /**
+     * Increments the time on the timer object provided and fires a custom event to notify listeners of the change
+     */
+    updateTime() {
+        this.secondsElapsed++;
         var timeRemaining = 0;
-        if (QuizTimer.totalTimeAllocated > quizTimer.secondsElapsed) {
-            timeRemaining = QuizTimer.totalTimeAllocated - quizTimer.secondsElapsed;
+        if (this.totalTimeAllocated > this.secondsElapsed) {
+            timeRemaining = this.totalTimeAllocated - this.secondsElapsed;
         }
-        var updateTimeEvent = new CustomEvent(QuizTimer.timeUpdatedEventType, { detail: { time: timeRemaining } });
+        var formattedTime = this.getFormattedTime(timeRemaining);
+        var updateTimeEvent = new CustomEvent(this.timeUpdatedEventType, { detail: { time: timeRemaining, displayTime: formattedTime } });
         window.dispatchEvent(updateTimeEvent);
         // If the timer has completed, stop execution
         if (timeRemaining == 0)
-            quizTimer.stop();
+            this.stop();
+    }
+
+    /**
+     * Formats the given time in M:SS format 
+     * @param {number} totalSeconds the total seconds as an integer
+     * @returns {string} the formatted time
+     */
+    getFormattedTime(totalSeconds) {
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = "00" + (totalSeconds % 60);
+        return minutes + ":" + seconds.substr(seconds.length - 2);
     }
 }
-
-// An instance of this class is made available on the window object so it can be accessed directly from the page
-window.quizTimer = new QuizTimer();

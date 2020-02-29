@@ -7,13 +7,13 @@ class UserScore {
 }
 
 /** This class provides utility methods to work with user scores and save / retrieve them from local storage */
-class UserScoreHelper {
+class ScoreHelper {
     /** Key used to access the user scores from the local storage */
-    static javascript_quiz_score = "javascript_quiz_score";
+    javascript_quiz_score = "javascript_quiz_score";
 
     /** Fetches the user scores from the local storage 
      * @returns {Array.<UserScore>} an array of user score objects */
-    static getScores() {
+    getScores() {
         var jsScoreList = JSON.parse(window.localStorage.getItem(this.javascript_quiz_score));
         if (jsScoreList == null) {
             jsScoreList = [];
@@ -23,14 +23,14 @@ class UserScoreHelper {
 
     /** Saves the given user scores into local storage 
      * @param {Array.<UserScore>} scoreList an array of user score objects */
-    static saveScores(scoreList) {
+    saveScores(scoreList) {
         window.localStorage.setItem(this.javascript_quiz_score, JSON.stringify(scoreList));
     }
 
     /** Adds a new user score to the local storage
      * @param {UserScore} newScore the user score object to be added 
      */
-    static addScore(newScore) {
+    addScore(newScore) {
         // Load the current scores
         var scoreList = this.getScores();
         var insertPosition = scoreList.length;
@@ -47,7 +47,7 @@ class UserScoreHelper {
     }
 
     /** Clears the user scores local storage */
-    static clearScores() {
+    clearScores() {
         window.localStorage.setItem(this.javascript_quiz_score, null);
     }
 }

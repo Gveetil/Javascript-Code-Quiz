@@ -4,6 +4,7 @@
 var scoreTableEl = document.querySelector("#score-table");
 var backButtonEl = document.querySelector("#go-back");
 var clearScoresButtonEl = document.querySelector("#clear-scores");
+var UserScoreHelper = new ScoreHelper();
 
 /** 
  * This function fetches user scores from the local storage 
