@@ -1,22 +1,25 @@
+/** The total time allocated for the quiz in seconds -- 2 minutes */
+const totalTimeAllocated = 120;
+/** The penalty for a wrong answer in the quiz / seconds lost -- 10 seconds */
+const wrongAnswerPenalty = 10;
+/** Name of custom event type published by the quiz timer when the time is updated */
+const timeUpdatedEventType = "timeupdated";
 
 /** This class provides utility methods to work with the quiz timer */
 class QuizTimer {
-    /** The total time allocated for the quiz in seconds -- 2 minutes */
-    totalTimeAllocated = 120;
-    /** The penalty for a wrong answer in the quiz / seconds lost -- 10 seconds */
-    wrongAnswerPenalty = 10;
-    /** The custom event type published by this class when the time is updated */
-    timeUpdatedEventType = "timeupdated";
-    secondsElapsed = 0;
-    timeoutInterval = null;
+    // Initialize class variables
+    constructor() {
+        this.secondsElapsed = 0;
+        this.timeoutInterval = null;
+    }
 
     /**
      * Applies a time penalty by subtracting time from the timer clock
      */
     applyTimePenalty() {
-        this.secondsElapsed = this.secondsElapsed + this.wrongAnswerPenalty - 1;
-        if (this.secondsElapsed > this.totalTimeAllocated)
-            this.secondsElapsed = this.totalTimeAllocated;
+        this.secondsElapsed = this.secondsElapsed + wrongAnswerPenalty - 1;
+        if (this.secondsElapsed > totalTimeAllocated)
+            this.secondsElapsed = totalTimeAllocated;
         this.updateTime(this);
     }
 
@@ -40,7 +43,7 @@ class QuizTimer {
      * @param {function} handler function to be invoked when the event is dispatched. 
      */
     addEventListener(handler) {
-        window.addEventListener(this.timeUpdatedEventType, handler);
+        window.addEventListener(timeUpdatedEventType, handler);
     }
 
     /**
@@ -49,11 +52,11 @@ class QuizTimer {
     updateTime() {
         this.secondsElapsed++;
         var timeRemaining = 0;
-        if (this.totalTimeAllocated > this.secondsElapsed) {
-            timeRemaining = this.totalTimeAllocated - this.secondsElapsed;
+        if (totalTimeAllocated > this.secondsElapsed) {
+            timeRemaining = totalTimeAllocated - this.secondsElapsed;
         }
         var formattedTime = this.getFormattedTime(timeRemaining);
-        var updateTimeEvent = new CustomEvent(this.timeUpdatedEventType, { detail: { time: timeRemaining, displayTime: formattedTime } });
+        var updateTimeEvent = new CustomEvent(timeUpdatedEventType, { detail: { time: timeRemaining, displayTime: formattedTime } });
         window.dispatchEvent(updateTimeEvent);
         // If the timer has completed, stop execution
         if (timeRemaining == 0)

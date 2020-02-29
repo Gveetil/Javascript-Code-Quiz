@@ -1,3 +1,6 @@
+/** Key used to access the user scores from the local storage */
+const javascript_quiz_score = "javascript_quiz_score";
+
 /** This class represents a user's score*/
 class UserScore {
     constructor(initials, score) {
@@ -8,13 +11,10 @@ class UserScore {
 
 /** This class provides utility methods to work with user scores and save / retrieve them from local storage */
 class ScoreHelper {
-    /** Key used to access the user scores from the local storage */
-    javascript_quiz_score = "javascript_quiz_score";
-
     /** Fetches the user scores from the local storage 
      * @returns {Array.<UserScore>} an array of user score objects */
     getScores() {
-        var jsScoreList = JSON.parse(window.localStorage.getItem(this.javascript_quiz_score));
+        var jsScoreList = JSON.parse(window.localStorage.getItem(javascript_quiz_score));
         if (jsScoreList == null) {
             jsScoreList = [];
         }
@@ -24,7 +24,7 @@ class ScoreHelper {
     /** Saves the given user scores into local storage 
      * @param {Array.<UserScore>} scoreList an array of user score objects */
     saveScores(scoreList) {
-        window.localStorage.setItem(this.javascript_quiz_score, JSON.stringify(scoreList));
+        window.localStorage.setItem(javascript_quiz_score, JSON.stringify(scoreList));
     }
 
     /** Adds a new user score to the local storage
@@ -48,6 +48,6 @@ class ScoreHelper {
 
     /** Clears the user scores local storage */
     clearScores() {
-        window.localStorage.setItem(this.javascript_quiz_score, null);
+        window.localStorage.setItem(javascript_quiz_score, null);
     }
 }
