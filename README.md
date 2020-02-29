@@ -1,6 +1,6 @@
 # Javascript Coding Quiz
 
- [![Image of Coding Quiz Icon](assets/images/readme_coding_Quiz_Icon.jpg "Open the Javascript Coding Quiz.")](https://gveetil.github.io/Javascript-Code-Quiz/)
+ [![Image of Coding Quiz Icon](assets/images/readme_coding_quiz_icon.jpg "Open the Javascript Coding Quiz.")](https://gveetil.github.io/Javascript-Code-Quiz/)
 
 ## Description
 This application performs a JavaScript coding assessment with a timed code quiz. The user is presented with a series of multiple-choice questions that test their knowledge of JavaScript programming. These questions are presented in a random sequence, and the user can answer them within a given time limit. Correct answers earn the user one score point. Incorrect answers will penalize the quiz time by ten seconds. Once all the questions have been answered correctly, or the quiz time runs out, the user can view thier score and choose to save it. The user can also view all the scores saved on the system. 
